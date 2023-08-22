@@ -79,9 +79,9 @@ variable "firewall_ids" {
 variable "network_config" {
   description = "Network the server should be attached to on creation."
   type = object({
-    subnet_id = string
-    ip        = optional(string)
-    alias_ips = optional(list(string), [])
+    network_id = string
+    ip         = string
+    alias_ips  = optional(list(string), [])
   })
 }
 

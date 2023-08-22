@@ -9,7 +9,7 @@ output "name" {
 }
 
 output "network" {
-  value       = hcloud_server_network.network
+  value       = hcloud_server.instance.network
   description = "Server network."
 }
 

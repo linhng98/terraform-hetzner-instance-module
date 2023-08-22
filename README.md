@@ -20,7 +20,6 @@ No modules.
 | Name | Type |
 |------|------|
 | [hcloud_server.instance](https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/server) | resource |
-| [hcloud_server_network.network](https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/server_network) | resource |
 | [hcloud_volume_attachment.volume](https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/volume_attachment) | resource |
 
 ## Inputs
@@ -37,7 +36,7 @@ No modules.
 | <a name="input_labels"></a> [labels](#input\_labels) | User-defined labels (key-value pairs) should be created with. | `map(string)` | `{}` | no |
 | <a name="input_location"></a> [location](#input\_location) | The location name to create the server in. nbg1, fsn1, hel1, ash or hil. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | Name of the server to create (must be unique per project and a valid hostname as per RFC 1123). | `string` | n/a | yes |
-| <a name="input_network_config"></a> [network\_config](#input\_network\_config) | Network the server should be attached to on creation. | <pre>object({<br>    subnet_id = string<br>    ip        = optional(string)<br>    alias_ips = optional(list(string), [])<br>  })</pre> | n/a | yes |
+| <a name="input_network_config"></a> [network\_config](#input\_network\_config) | Network the server should be attached to on creation. | <pre>object({<br>    network_id = string<br>    ip         = string<br>    alias_ips  = optional(list(string), [])<br>  })</pre> | n/a | yes |
 | <a name="input_placement_group_id"></a> [placement\_group\_id](#input\_placement\_group\_id) | Placement Group ID the server added to on creation. | `string` | `null` | no |
 | <a name="input_public_net"></a> [public\_net](#input\_public\_net) | In this block you can either enable / disable ipv4 and ipv6 or link existing primary IPs (checkout the examples). If this block is not defined, two primary (ipv4 & ipv6) ips getting auto generated. | <pre>object({<br>    ipv4_enabled = optional(bool, false)<br>    ipv4         = optional(string)<br>    ipv6_enabled = optional(bool, false)<br>  })</pre> | n/a | yes |
 | <a name="input_rescue"></a> [rescue](#input\_rescue) | Enable and boot in to the specified rescue system. This enables simple installation of custom operating systems. linux64 or linux32 | `string` | `null` | no |
@@ -56,4 +55,3 @@ No modules.
 | <a name="output_name"></a> [name](#output\_name) | Name of the server. |
 | <a name="output_network"></a> [network](#output\_network) | Server network. |
 | <a name="output_server_type"></a> [server\_type](#output\_server\_type) | Name of the server type. |
-| <a name="output_user_data"></a> [user\_data](#output\_user\_data) | n/a |
