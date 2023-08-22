@@ -1,32 +1,35 @@
-locals {
-  subnets = {
-    for v in var.subnets : "${v.network_zone}_${v.ip_range}" => v
+resource "hcloud_server" "instance" {
+  name        = var.name
+  server_type = var.server_type
+  image       = var.image
+  location    = var.location
+  datacenter  = var.datacenter
+  user_data   = var.user_data
+  ssh_keys    = var.ssh_keys
+  public_net {
+    ipv4_enabled = var.public_net.ipv4_enabled
+    ipv6_enabled = var.public_net.ipv6_enabled
+    ipv4         = var.public_net.ipv4
   }
-  routes = {
-    for v in var.routes : "${v.gateway}_${v.destination}" => v
-  }
+  keep_disk          = var.keep_disk
+  iso                = var.iso
+  rescue             = var.rescue
+  labels             = var.labels
+  backups            = var.backups
+  firewall_ids       = var.firewall_ids
+  placement_group_id = var.placement_group_id
 }
 
-resource "hcloud_network" "vpc" {
-  name                     = var.name
-  ip_range                 = var.ip_range
-  labels                   = var.labels
-  delete_protection        = var.delete_protection
-  expose_routes_to_vswitch = var.expose_routes_to_vswitch
+resource "hcloud_server_network" "network" {
+  server_id = hcloud_server.instance.id
+  alias_ips = var.network_config.alias_ips
+  ip        = var.network_config.ip
+  subnet_id = var.network_config.subnet_id
 }
 
-resource "hcloud_network_subnet" "subnet" {
-  for_each     = local.subnets
-  network_id   = hcloud_network.vpc.id
-  type         = each.value.type
-  network_zone = each.value.network_zone
-  ip_range     = each.value.ip_range
-  vswitch_id   = each.value.vswitch_id
-}
-
-resource "hcloud_network_route" "route" {
-  for_each    = local.routes
-  network_id  = hcloud_network.vpc.id
-  destination = each.value.destination
-  gateway     = each.value.gateway
+resource "hcloud_volume_attachment" "volume" {
+  count     = length(var.attach_volumes)
+  volume_id = var.attach_volumes[count.index]
+  server_id = hcloud_server.instance.id
+  automount = false
 }

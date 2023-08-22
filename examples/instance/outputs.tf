@@ -1,34 +1,34 @@
 output "id" {
-  value       = hcloud_server.instance.id
+  value       = module.instance.id
   description = "Unique ID of the server."
 }
 
 output "name" {
-  value       = hcloud_server.instance.name
+  value       = module.instance.name
   description = "Name of the server."
 }
 
 output "network" {
-  value       = hcloud_server_network.network
+  value       = module.instance.network
   description = "Server network."
 }
 
 output "server_type" {
-  value       = hcloud_server.instance.server_type
+  value       = module.instance.server_type
   description = "Name of the server type."
 }
 
 output "image" {
-  value       = hcloud_server.instance.image
+  value       = module.instance.image
   description = "Name or ID of the image the server was created from."
 }
 
 output "location" {
-  value       = hcloud_server.instance.location
+  value       = module.instance.location
   description = "The location name."
 }
 
 output "labels" {
-  value       = hcloud_server.instance.labels
+  value       = module.instance.labels
   description = "Resource labels."
 }
